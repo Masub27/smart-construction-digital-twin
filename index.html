@@ -5,8 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Human–AI Smart Construction Site digital twin for TVET">
   <title>Smart Construction Site Fault-to-Decision Twin</title>
-  <link rel="stylesheet" href="css/style.css?v=2">
-  <link rel="stylesheet" href="css/instructor.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="css/instructor.css?v=3">
+  <link rel="stylesheet" href="css/conference.css?v=3">
 </head>
 <body>
   <header class="topbar">
@@ -15,7 +16,7 @@
       <h1>Smart Construction Site <span>Fault-to-Decision Twin</span></h1>
       <p class="subtitle">Investigate hidden construction faults through virtual sensors, workplace agents and human-led decisions.</p>
     </div>
-    <div class="system-pill"><i></i><span id="systemStatus">LAB READY</span></div>
+    <div class="header-actions"><button id="conferenceDemo" class="conference-button">▶ Conference Demo</button><button id="fullscreenMode" class="conference-button ghost">⛶ Fullscreen</button><div class="system-pill"><i></i><span id="systemStatus">LAB READY</span></div></div>
   </header>
 
   <main class="container">
@@ -24,15 +25,24 @@
         <div class="section-heading"><span>01</span><div><h2>Construction Site Twin</h2><p>Start a mystery scenario and diagnose the condition from evidence.</p></div></div>
         <div class="site-visual" id="siteVisual">
           <div class="sky"><div class="cloud c1"></div><div class="cloud c2"></div></div>
-          <div class="crane"><div class="mast"></div><div class="boom"></div><div class="cable"></div><div class="load"></div></div>
+          <div class="drone" data-hotspot="dust">✣<span></span></div>
+          <div class="crane" data-hotspot="craneTilt"><div class="mast"></div><div class="boom"></div><div class="trolley"><div class="cable"></div><div class="load"></div></div></div>
           <div class="building">
             <div class="floor f3"><i></i><i></i><i></i></div>
             <div class="floor f2"><i></i><i></i><i></i></div>
             <div class="floor f1"><i></i><i></i><i></i></div>
+            <div class="lift">↕</div><div class="crack-effect"></div><div class="heat-effect"></div>
           </div>
+          <div class="mixer" data-hotspot="concreteTemp"><div class="truck-body"></div><div class="drum">◒</div><i></i><i></i></div>
+          <div class="excavator" data-hotspot="noise"><div class="cab"></div><div class="arm"></div><div class="bucket"></div></div>
           <div class="worker w1">👷</div><div class="worker w2">👷‍♀️</div>
+          <div class="dust-effect"><i></i><i></i><i></i><i></i><i></i></div><div class="water-effect"></div><div class="spark-effect">⚡</div>
+          <button class="hotspot crane-spot" data-hotspot="craneTilt" aria-label="Inspect crane tilt sensor">+</button>
+          <button class="hotspot concrete-spot" data-hotspot="concreteTemp" aria-label="Inspect concrete sensors">+</button>
+          <button class="hotspot power-spot" data-hotspot="electricalLoad" aria-label="Inspect temporary power sensor">+</button>
           <div class="ground"></div>
           <div class="site-alert" id="siteAlert">SITE NORMAL</div>
+          <div class="hotspot-panel" id="hotspotPanel"><button id="closeHotspot" aria-label="Close">×</button><small>LIVE SENSOR</small><strong id="hotspotTitle">Sensor</strong><span id="hotspotReading">—</span><p id="hotspotNote">Select a site hotspot.</p></div>
         </div>
       </div>
 
@@ -67,6 +77,15 @@
       </div>
     </section>
 
+    <section class="card conference-dashboard">
+      <div class="section-heading"><span>02A</span><div><h2>Live Process Intelligence</h2><p>Rolling 60-second digital-twin history with fault-event markers.</p></div><b class="badge ai">REAL-TIME</b></div>
+      <div class="chart-grid">
+        <article><h3>Concrete condition</h3><canvas id="concreteChart" height="150"></canvas><p>Temperature °C · Moisture %</p></article>
+        <article><h3>Structural and crane stability</h3><canvas id="structureChart" height="150"></canvas><p>Strain ÷10 · Tilt °</p></article>
+        <article><h3>Workplace environment</h3><canvas id="environmentChart" height="150"></canvas><p>Dust ÷5 · Noise dB(A)</p></article>
+      </div>
+    </section>
+
     <section class="card">
       <div class="section-heading"><span>02</span><div><h2>Virtual Construction Sensors</h2><p>ESP32-ready channels update once per second.</p></div><b class="online">● 8 SENSORS ONLINE</b></div>
       <div class="sensor-grid">
@@ -85,6 +104,17 @@
     <section class="card investigation">
       <div class="section-heading"><span>03</span><div><h2>Evidence Board</h2><p>The fault name is hidden. Interpret the abnormal measurements.</p></div><b id="evidenceBadge" class="badge neutral">NO ACTIVE CASE</b></div>
       <div id="evidenceText" class="evidence-text">Start a mystery scenario to receive a construction work order.</div>
+    </section>
+
+    <section class="card impact-card">
+      <div class="section-heading"><span>03A</span><div><h2>Engineering Impact Forecast</h2><p>Training estimates show why early human–AI intervention matters.</p></div><b id="impactRisk" class="badge neutral">MONITORING</b></div>
+      <div class="impact-grid">
+        <article><small>Potential delay avoided</small><strong id="impactDelay">0 h</strong></article>
+        <article><small>Repair cost avoided</small><strong id="impactCost">€0</strong></article>
+        <article><small>Material waste avoided</small><strong id="impactWaste">0 kg</strong></article>
+        <article><small>Embodied CO₂ avoided</small><strong id="impactCarbon">0 kg</strong></article>
+      </div>
+      <p class="impact-disclaimer">Illustrative educational estimates—not a commercial engineering forecast.</p>
     </section>
 
     <section class="card">
@@ -116,6 +146,8 @@
   </main>
 
   <footer>Human–AI Smart Construction Site · Industry 5.0 TVET Laboratory · Browser-based simulation</footer>
-  <script src="js/app.js?v=2"></script>
+  <div class="demo-overlay" id="demoOverlay"><div><small>GUIDED CONFERENCE STORY</small><h2 id="demoTitle">Digital twin ready</h2><p id="demoNarration">Normal site operation is being monitored.</p><div class="demo-progress"><i id="demoProgress"></i></div><button id="stopDemo">Stop demo</button></div></div>
+  <script src="js/app.js?v=3"></script>
+  <script src="js/conference.js?v=3"></script>
 </body>
 </html>

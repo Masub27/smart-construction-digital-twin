@@ -11,6 +11,18 @@ Browser-based Industry 5.0 TVET laboratory for hidden construction-fault investi
 - Human-led diagnosis and corrective action
 - Competence scoring and event log
 - Responsive GitHub Pages design
+- Moving crane, trolley, load, mixer, excavator, workers, lift and inspection drone
+- Visual fault effects, clickable sensor hotspots and rolling 60-second charts
+- Engineering-impact forecast and fullscreen guided conference demonstration
+
+## UNESCO conference demonstration
+
+1. Open the site in a modern browser.
+2. Select **Conference Demo** in the header.
+3. The guided story injects crane instability, shows changing telemetry and consults all three agents one by one.
+4. Select **Stop Demo** at any time to return to manual laboratory use.
+
+Impact figures are illustrative training estimates, not commercial engineering forecasts.
 
 ## Run locally
 

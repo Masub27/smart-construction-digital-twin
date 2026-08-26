@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Human–AI Smart Construction Site digital twin for TVET">
+  <title>Smart Construction Site Fault-to-Decision Twin</title>
+  <link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">VET LIVING LABS 6.0 · INDUSTRY 5.0</p>
+      <h1>Smart Construction Site <span>Fault-to-Decision Twin</span></h1>
+      <p class="subtitle">Investigate hidden construction faults through virtual sensors, workplace agents and human-led decisions.</p>
+    </div>
+    <div class="system-pill"><i></i><span id="systemStatus">LAB READY</span></div>
+  </header>
+
+  <main class="container">
+    <section class="card hero-grid">
+      <div>
+        <div class="section-heading"><span>01</span><div><h2>Construction Site Twin</h2><p>Start a mystery scenario and diagnose the condition from evidence.</p></div></div>
+        <div class="site-visual" id="siteVisual">
+          <div class="sky"><div class="cloud c1"></div><div class="cloud c2"></div></div>
+          <div class="crane"><div class="mast"></div><div class="boom"></div><div class="cable"></div><div class="load"></div></div>
+          <div class="building">
+            <div class="floor f3"><i></i><i></i><i></i></div>
+            <div class="floor f2"><i></i><i></i><i></i></div>
+            <div class="floor f1"><i></i><i></i><i></i></div>
+          </div>
+          <div class="worker w1">👷</div><div class="worker w2">👷‍♀️</div>
+          <div class="ground"></div>
+          <div class="site-alert" id="siteAlert">SITE NORMAL</div>
+        </div>
+      </div>
+
+      <div class="control-panel">
+        <div class="mode-row"><span class="mode active">STUDENT MYSTERY MODE</span><span class="mode">VIRTUAL IOT</span></div>
+        <h3>Scenario control</h3>
+        <p>The actual fault remains hidden until the learner submits a diagnosis.</p>
+        <button id="startScenario" class="primary big">Start New Mystery Scenario</button>
+        <button id="resetLab" class="secondary">Reset Laboratory</button>
+        <div class="mission-box">
+          <small>ACTIVE WORK ORDER</small>
+          <strong id="workOrder">No scenario active</strong>
+          <span id="missionTimer">Elapsed time: 00:00</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="section-heading"><span>02</span><div><h2>Virtual Construction Sensors</h2><p>ESP32-ready channels update once per second.</p></div><b class="online">● 8 SENSORS ONLINE</b></div>
+      <div class="sensor-grid">
+        <article class="sensor" data-key="concreteTemp"><div>🌡️ <b>Concrete Temperature</b></div><strong><span id="concreteTemp">24.0</span> <small>°C</small></strong><em id="concreteTempState">NORMAL</em></article>
+        <article class="sensor" data-key="concreteMoisture"><div>💧 <b>Concrete Moisture</b></div><strong><span id="concreteMoisture">72</span> <small>%</small></strong><em id="concreteMoistureState">NORMAL</em></article>
+        <article class="sensor" data-key="strain"><div>🏗️ <b>Structural Strain</b></div><strong><span id="strain">120</span> <small>µε</small></strong><em id="strainState">NORMAL</em></article>
+        <article class="sensor" data-key="craneTilt"><div>🏗️ <b>Crane Tilt</b></div><strong><span id="craneTilt">0.4</span> <small>°</small></strong><em id="craneTiltState">NORMAL</em></article>
+        <article class="sensor" data-key="dust"><div>🌫️ <b>Dust Concentration</b></div><strong><span id="dust">18</span> <small>µg/m³</small></strong><em id="dustState">NORMAL</em></article>
+        <article class="sensor" data-key="noise"><div>🔊 <b>Noise Exposure</b></div><strong><span id="noise">68</span> <small>dB(A)</small></strong><em id="noiseState">NORMAL</em></article>
+        <article class="sensor" data-key="materialMoisture"><div>🧱 <b>Material Moisture</b></div><strong><span id="materialMoisture">8</span> <small>%</small></strong><em id="materialMoistureState">NORMAL</em></article>
+        <article class="sensor" data-key="electricalLoad"><div>⚡ <b>Temporary Power</b></div><strong><span id="electricalLoad">18.5</span> <small>kW</small></strong><em id="electricalLoadState">NORMAL</em></article>
+      </div>
+      <p class="packet">● Virtual sensor packet received · <span id="packetTime">waiting</span></p>
+    </section>
+
+    <section class="card investigation">
+      <div class="section-heading"><span>03</span><div><h2>Evidence Board</h2><p>The fault name is hidden. Interpret the abnormal measurements.</p></div><b id="evidenceBadge" class="badge neutral">NO ACTIVE CASE</b></div>
+      <div id="evidenceText" class="evidence-text">Start a mystery scenario to receive a construction work order.</div>
+    </section>
+
+    <section class="card">
+      <div class="section-heading"><span>04</span><div><h2>Sequential Workplace Consultations</h2><p>Visit each specialist individually. Their reports do not appear simultaneously.</p></div><b class="badge ai">HUMAN–AI TEAM</b></div>
+      <div class="agent-grid">
+        <article class="agent" id="card-engineer"><div class="agent-icon">👷‍♂️</div><h3>Site Engineer Agent</h3><p id="agent-engineer">Start a scenario, then consult this specialist.</p><button data-agent="engineer">Consult Site Engineer</button></article>
+        <article class="agent" id="card-safety"><div class="agent-icon">🦺</div><h3>Safety Officer Agent</h3><p id="agent-safety">Start a scenario, then consult this specialist.</p><button data-agent="safety">Consult Safety Officer</button></article>
+        <article class="agent" id="card-sustainability"><div class="agent-icon">♻️</div><h3>Sustainability & Cost Agent</h3><p id="agent-sustainability">Start a scenario, then consult this specialist.</p><button data-agent="sustainability">Consult Sustainability Agent</button></article>
+      </div>
+      <div class="consensus locked" id="consensus"><small>THREE-AGENT CONSENSUS</small><h3>🔒 Coordinated construction decision locked</h3><p>Consult all three workplace agents. (0 of 3 completed)</p></div>
+    </section>
+
+    <section class="card">
+      <div class="section-heading"><span>05</span><div><h2>Learner Diagnosis and Decision</h2><p>Use sensor evidence and professional recommendations.</p></div><b id="score">Score: 0</b></div>
+      <div class="decision-grid">
+        <label>Suspected fault<select id="diagnosis"><option value="">Select diagnosis…</option><option value="rapid-curing">Rapid concrete curing</option><option value="formwork-overload">Formwork overload</option><option value="crane-instability">Crane instability</option><option value="dust-hazard">Dust exposure hazard</option><option value="water-leak">Water leakage</option><option value="wet-material">Wet construction material</option><option value="electrical-fault">Temporary electrical fault</option><option value="sensor-drift">Sensor calibration drift</option></select></label>
+        <label>Immediate action<select id="action"><option value="">Select action…</option><option value="isolate-area">Isolate affected area</option><option value="control-curing">Control temperature and moisture</option><option value="unload-formwork">Stop work and unload formwork</option><option value="secure-crane">Stop lifting and secure crane</option><option value="dust-control">Stop work and activate dust control</option><option value="stop-leak">Isolate water and inspect leakage</option><option value="quarantine-material">Quarantine and dry materials</option><option value="electrical-isolation">Electrical isolation and inspection</option><option value="calibrate-sensor">Verify and calibrate sensor</option></select></label>
+      </div>
+      <label>Evidence-based justification<textarea id="reason" rows="4" placeholder="Refer to sensor readings, safety risks and agent recommendations…"></textarea></label>
+      <button id="submitDecision" class="primary full" disabled>Consult all agents before submitting</button>
+      <div id="feedback" class="feedback hidden"></div>
+    </section>
+
+    <section class="card">
+      <div class="section-heading"><span>06</span><div><h2>Competence and Event Log</h2><p>Process evidence for learner reflection and professor review.</p></div></div>
+      <div class="competence-grid"><div><span>Sensor interpretation</span><b id="cSensor">0/20</b></div><div><span>Agent consultation</span><b id="cAgent">0/20</b></div><div><span>Safety decision</span><b id="cSafety">0/25</b></div><div><span>Diagnosis</span><b id="cDiagnosis">0/25</b></div><div><span>Justification</span><b id="cReason">0/10</b></div></div>
+      <div id="eventLog" class="event-log"></div>
+    </section>
+  </main>
+
+  <footer>Human–AI Smart Construction Site · Industry 5.0 TVET Laboratory · Browser-based simulation</footer>
+  <script src="js/app.js?v=1"></script>
+</body>
+</html>

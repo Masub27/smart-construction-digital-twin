@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Human–AI Smart Construction Site digital twin for TVET">
   <title>Smart Construction Site Fault-to-Decision Twin</title>
-  <link rel="stylesheet" href="css/style.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/instructor.css?v=2">
 </head>
 <body>
   <header class="topbar">
@@ -41,6 +42,23 @@
         <p>The actual fault remains hidden until the learner submits a diagnosis.</p>
         <button id="startScenario" class="primary big">Start New Mystery Scenario</button>
         <button id="resetLab" class="secondary">Reset Laboratory</button>
+        <details class="instructor-tools">
+          <summary>⚙️ Instructor Fault Injection</summary>
+          <p>Select a known fault for a guided demonstration.</p>
+          <label>Construction fault
+            <select id="instructorFault">
+              <option value="rapid-curing">Rapid concrete curing</option>
+              <option value="formwork-overload">Formwork overload</option>
+              <option value="crane-instability">Crane instability</option>
+              <option value="dust-hazard">Dust exposure hazard</option>
+              <option value="water-leak">Water leakage</option>
+              <option value="wet-material">Wet construction material</option>
+              <option value="electrical-fault">Temporary electrical fault</option>
+              <option value="sensor-drift">Sensor calibration drift</option>
+            </select>
+          </label>
+          <button id="injectInstructorFault" class="danger-button" type="button">Inject Selected Fault</button>
+        </details>
         <div class="mission-box">
           <small>ACTIVE WORK ORDER</small>
           <strong id="workOrder">No scenario active</strong>
@@ -98,6 +116,6 @@
   </main>
 
   <footer>Human–AI Smart Construction Site · Industry 5.0 TVET Laboratory · Browser-based simulation</footer>
-  <script src="js/app.js?v=1"></script>
+  <script src="js/app.js?v=2"></script>
 </body>
 </html>

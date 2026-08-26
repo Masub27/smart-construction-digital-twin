@@ -1,0 +1,39 @@
+.instructor-tools {
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid #fecaca;
+  border-radius: 14px;
+  background: #fff7f7;
+}
+
+.instructor-tools summary {
+  cursor: pointer;
+  color: #991b1b;
+  font-weight: 850;
+}
+
+.instructor-tools p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.instructor-tools label {
+  font-size: 13px;
+}
+
+.danger-button {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px;
+  border: 0;
+  border-radius: 11px;
+  background: #dc2626;
+  color: #fff;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.danger-button:hover {
+  background: #b91c1c;
+}

@@ -21,4 +21,33 @@ function startScenario(){const keys=Object.keys(CASES);activeCase=CASES[keys[Mat
 function consult(name){if(!activeCase)return;$("agent-"+name).textContent=activeCase.agents[name];consulted.add(name);const card=$("card-"+name);card.classList.add("consulted");const button=card.querySelector("button");button.disabled=true;button.textContent="✓ Consultation completed";$("cAgent").textContent=`${Math.round(consulted.size/3*20)}/20`;if(consulted.size===3){$("consensus").className="consensus";$("consensus").innerHTML=`<small>THREE-AGENT CONSENSUS</small><h3>Coordinated construction response</h3><p>${activeCase.solution}</p>`;$("submitDecision").disabled=false;$("submitDecision").textContent="Submit Diagnosis and Decision"}else{$("consensus").querySelector("p").textContent=`Continue investigation: ${consulted.size} of 3 agents consulted.`}log(`${name} specialist consulted.`)}
 function submit(){if(!activeCase)return;const diagnosis=$("diagnosis").value,action=$("action").value,reason=$("reason").value.trim();const d=diagnosis===activeCase.id,a=action===activeCase.action,r=reason.length>=25;const sensor=diagnosis?20:0,agent=consulted.size===3?20:0,safety=a?25:0,diag=d?25:0,why=r?10:0;totalScore=sensor+agent+safety+diag+why;$("cSensor").textContent=`${sensor}/20`;$("cAgent").textContent=`${agent}/20`;$("cSafety").textContent=`${safety}/25`;$("cDiagnosis").textContent=`${diag}/25`;$("cReason").textContent=`${why}/10`;$("score").textContent=`Score: ${totalScore}/100`;const ok=d&&a&&r;$("feedback").className=`feedback ${ok?"success":"danger"}`;$("feedback").innerHTML=ok?`<strong>✓ Correct professional decision</strong><br>You identified <b>${activeCase.name}</b>, selected the appropriate immediate action and justified it with evidence.`:`<strong>✗ Decision requires review</strong><br>Actual condition: <b>${activeCase.name}</b>. Recommended response: ${activeCase.solution}. ${!r?"Your justification must contain at least 25 characters.":"Compare your selection with the evidence and agent reports."}`;$("evidenceBadge").textContent=activeCase.name.toUpperCase();log(`Learner submitted decision: ${ok?"competent":"review required"} (${totalScore}/100).`)}
 function reset(){activeCase=null;target={...NORMAL};startedAt=null;$("workOrder").textContent="No scenario active";$("missionTimer").textContent="Elapsed time: 00:00";$("siteAlert").textContent="SITE NORMAL";$("siteAlert").className="site-alert";$("evidenceBadge").textContent="NO ACTIVE CASE";$("evidenceBadge").className="badge neutral";document.querySelector(".investigation").classList.remove("active");$("evidenceText").textContent="Start a mystery scenario to receive a construction work order.";["cSensor","cAgent","cSafety","cDiagnosis","cReason"].forEach((id,i)=>$(id).textContent=`0/${[20,20,25,25,10][i]}`);$("score").textContent="Score: 0";$("feedback").className="feedback hidden";resetAgents();log("Laboratory reset.")}
-$("startScenario").addEventListener("click",startScenario);$("resetLab").addEventListener("click",reset);document.querySelectorAll(".agent button").forEach(b=>b.addEventListener("click",()=>consult(b.dataset.agent)));$("submitDecision").addEventListener("click",submit);setInterval(tick,1000);reset();log("Smart Construction Site Digital Twin initialized.");
+
+function injectInstructorFault(){
+  const id=$("instructorFault").value;
+  activeCase=CASES[id];
+  activeCase.id=id;
+  target={...NORMAL,...activeCase.targets};
+  startedAt=Date.now();
+  $("workOrder").textContent=`DEMO-${Math.floor(100+Math.random()*900)} · ${activeCase.name}`;
+  $("siteAlert").textContent="FAULT INJECTED";
+  $("siteAlert").className="site-alert active";
+  $("evidenceBadge").textContent="INSTRUCTOR DEMO";
+  $("evidenceBadge").className="badge active";
+  document.querySelector(".investigation").classList.add("active");
+  $("evidenceText").innerHTML=`<strong>Injected fault:</strong> ${activeCase.name}<br><span>${activeCase.evidence}</span>`;
+  $("feedback").className="feedback hidden";
+  $("diagnosis").value="";
+  $("action").value="";
+  $("reason").value="";
+  resetAgents();
+  log(`Instructor injected fault: ${activeCase.name}.`);
+}
+
+$("startScenario").addEventListener("click",startScenario);
+$("injectInstructorFault").addEventListener("click",injectInstructorFault);
+$("resetLab").addEventListener("click",reset);
+document.querySelectorAll(".agent button").forEach(b=>b.addEventListener("click",()=>consult(b.dataset.agent)));
+$("submitDecision").addEventListener("click",submit);
+setInterval(tick,1000);
+reset();
+log("Smart Construction Site Digital Twin initialized.");

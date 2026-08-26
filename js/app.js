@@ -10,6 +10,7 @@ const CASES={
 };
 
 const NORMAL={concreteTemp:24,concreteMoisture:72,strain:120,craneTilt:.4,dust:18,noise:68,materialMoisture:8,electricalLoad:18.5};
+const SIMULATION_NORMAL={...NORMAL};
 const UNIT_DIGITS={concreteTemp:1,concreteMoisture:0,strain:0,craneTilt:1,dust:0,noise:0,materialMoisture:0,electricalLoad:1};
 let values={...NORMAL},target={...NORMAL},activeCase=null,consulted=new Set(),startedAt=null,timer=null,totalScore=0;
 const $=id=>document.getElementById(id);
@@ -58,5 +59,18 @@ window.constructionTwin={
   injectFault(id){$("instructorFault").value=id;injectInstructorFault()},
   consult,
   reset,
+  applyLiveBaseline(baseline){
+    Object.entries(baseline).forEach(([key,value])=>{
+      if(!(key in NORMAL)||!Number.isFinite(Number(value)))return;
+      NORMAL[key]=Number(value);
+      if(!activeCase||!(key in activeCase.targets))target[key]=Number(value);
+    });
+    log("Live Magdeburg context synchronized with the virtual sensor baseline.");
+  },
+  restoreSimulationBaseline(){
+    Object.assign(NORMAL,SIMULATION_NORMAL);
+    if(!activeCase)target={...NORMAL};
+    log("Virtual laboratory baseline restored.");
+  },
   getState(){return {activeCase,values:{...values},target:{...target},consulted:[...consulted]}}
 };

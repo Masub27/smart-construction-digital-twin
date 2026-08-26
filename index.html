@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/style.css?v=3">
   <link rel="stylesheet" href="css/instructor.css?v=3">
   <link rel="stylesheet" href="css/conference.css?v=3">
+  <link rel="stylesheet" href="css/live-data.css?v=4">
 </head>
 <body>
   <header class="topbar">
@@ -47,7 +48,7 @@
       </div>
 
       <div class="control-panel">
-        <div class="mode-row"><span class="mode active">STUDENT MYSTERY MODE</span><span class="mode">VIRTUAL IOT</span></div>
+        <div class="mode-row"><span class="mode active">STUDENT MYSTERY MODE</span><span class="mode" id="activeDataMode">CONNECTING LIVE DATA</span></div>
         <h3>Scenario control</h3>
         <p>The actual fault remains hidden until the learner submits a diagnosis.</p>
         <button id="startScenario" class="primary big">Start New Mystery Scenario</button>
@@ -75,6 +76,34 @@
           <span id="missionTimer">Elapsed time: 00:00</span>
         </div>
       </div>
+    </section>
+
+    <section class="card live-context" id="liveContext">
+      <div class="section-heading"><span>02B</span><div><h2>Live Magdeburg Construction Context</h2><p>Real external weather influences the virtual site baseline every 15 minutes.</p></div><b id="liveStatus" class="badge neutral">CONNECTING</b></div>
+      <div class="live-toolbar">
+        <label>Digital-twin data mode
+          <select id="dataMode">
+            <option value="live" selected>Live Magdeburg + virtual site sensors</option>
+            <option value="simulation">Fully simulated laboratory</option>
+            <option value="esp32" disabled>Physical ESP32 (future connection)</option>
+          </select>
+        </label>
+        <button id="refreshLiveData" class="primary" type="button">↻ Refresh live data</button>
+      </div>
+      <div class="live-grid">
+        <article><small>🌡️ LIVE EXTERNAL DATA</small><span>Air temperature</span><strong><i id="liveTemperature">—</i> °C</strong></article>
+        <article><small>💧 LIVE EXTERNAL DATA</small><span>Relative humidity</span><strong><i id="liveHumidity">—</i> %</strong></article>
+        <article><small>🌧️ LIVE EXTERNAL DATA</small><span>Precipitation</span><strong><i id="livePrecipitation">—</i> mm</strong></article>
+        <article><small>💨 LIVE EXTERNAL DATA</small><span>Wind speed</span><strong><i id="liveWind">—</i> m/s</strong></article>
+        <article><small>⚠️ LIVE EXTERNAL DATA</small><span>Wind gust</span><strong><i id="liveGust">—</i> m/s</strong></article>
+        <article><small>🧭 LIVE EXTERNAL DATA</small><span>Wind direction</span><strong><i id="liveDirection">—</i>°</strong></article>
+      </div>
+      <div class="derived-grid">
+        <div><small>DIGITAL-TWIN DERIVED</small><b id="weatherRisk">Calculating site risk…</b><span id="weatherAdvice">Waiting for Magdeburg weather.</span></div>
+        <div><small>DATA PROVENANCE</small><b id="liveMeasuredAt">No measurement yet</b><span>Source: Open-Meteo · Location: Magdeburg (52.12, 11.63)</span></div>
+        <div><small>AUTOMATIC REFRESH</small><b id="nextRefresh">Next refresh: —</b><span id="liveMessage">The last valid reading is retained if the connection fails.</span></div>
+      </div>
+      <p class="data-clarity"><b>Transparency:</b> Weather cards are real regional data. Concrete, strain, tilt, dust and power remain virtual or weather-derived until physical ESP32 sensors are connected.</p>
     </section>
 
     <section class="card conference-dashboard">
@@ -149,5 +178,6 @@
   <div class="demo-overlay" id="demoOverlay"><div><small>GUIDED CONFERENCE STORY</small><h2 id="demoTitle">Digital twin ready</h2><p id="demoNarration">Normal site operation is being monitored.</p><div class="demo-progress"><i id="demoProgress"></i></div><button id="stopDemo">Stop demo</button></div></div>
   <script src="js/app.js?v=3"></script>
   <script src="js/conference.js?v=3"></script>
+  <script src="js/live-construction-data.js?v=4"></script>
 </body>
 </html>
